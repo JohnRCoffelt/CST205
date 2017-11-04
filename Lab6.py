@@ -56,3 +56,53 @@ def sepiaTone(pic):
   show(bnw)
   write_pic(bnw)
   return bnw
+
+#Problem 2
+#This function "artifies" a picture by modifying rgb values
+#based on their initial range. It then shows it, asks the user
+#to state where they want to save it, then name it, then finally save it
+#with that name.  It also shows and returns the new picture.
+def Artify():
+  pic = get_pic()
+  width = getWidth(pic)
+  height = getHeight(pic)
+  for x in range(0, width):
+    for y in range(0, height):
+      r = getRed(getPixel(pic,x,y))
+      g = getGreen(getPixel(pic,x,y))
+      b = getBlue(getPixel(pic,x,y))
+      #Wish python had switch statements
+      #The following statements do the "artifying" by changing the rgb values
+      #based on their initial value.
+      #We'll start with red
+      if r < 64:
+        r = 31
+      elif r > 63 and r < 128:
+        r = 95
+      elif r > 127 and r < 192:
+        r = 159
+      else:
+        r = 223
+      #Green is next
+      if g < 64:
+        g = 31
+      elif g > 63 and g < 128:
+        g = 95
+      elif g > 127 and g < 192:
+        g = 159
+      else:
+        g = 223
+      #Finally, blue
+      if b < 64:
+        b = 31
+      elif b > 63 and b < 128:
+        b = 95
+      elif b > 127 and b < 192:
+        b = 159
+      else:
+        b = 223
+      newColor = makeColor(r,g,b)
+      setColor(getPixel(pic,x,y),newColor)
+  show(pic)
+  write_pic(pic)
+  return pic
