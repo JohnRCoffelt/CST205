@@ -106,3 +106,40 @@ def Artify():
   show(pic)
   write_pic(pic)
   return pic
+
+#Problem 3 
+# Function that replaces all of the green pixels in an image with pixels forma background image
+# The user must first select the BACKGROUND image, then the GREEN SCREEN image.
+def chromakey():
+  background = get_pic()
+  green_pic = get_pic()
+  width = getWidth(green_pic)
+  height = getHeight(green_pic)
+  # Initiate the y value to track the y value on the GREEN SCREEN image
+  new_y = - 1 
+  #start for loop to cycle through all pixels in the GREEN SCREEN image
+  for y in range (0,height): 
+    #if we are still in range of the GREEN SCREEN pic, increase it's y value
+    if new_y < getHeight(green_pic)-1:  
+      new_y = new_y + 1
+      #reset the GREEN SCREEN'S x value for new y value
+      new_x = - 1
+    for x in range (0, width):
+      #if we are still in range of the GREEN SCREEN pic, increase it's x value
+      if new_x < getWidth(green_pic)-1: 
+        new_x = new_x + 1
+      #get the pixel from the BACKGROUND image
+      back_pixel=getPixel(background, x, y) 
+      #get the pixel from the GREEN SCREEN image
+      green_pixel=getPixel(green_pic, new_x, new_y) 
+      #grab the color from the BACKGROUND pixel
+      color=getColor(back_pixel) 
+      
+      #This if statement tests the GREEN SCREEN pixel to see if the RGB values fall within the green range
+      if getRed(green_pixel) < (getGreen(green_pixel) - 30) and getBlue(green_pixel) < (getGreen(green_pixel) - 30):
+        #If the pixel is green, re-color it
+        setColor(green_pixel, color) 
+
+  repaint(green_pic) 
+  write_pic(green_pic)
+  return green_pic
