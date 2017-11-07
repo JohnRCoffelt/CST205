@@ -64,45 +64,21 @@ def sepiaTone(pic):
 #with that name.  It also shows and returns the new picture.
 def Artify():
   pic = get_pic()
-  width = getWidth(pic)
-  height = getHeight(pic)
-  for x in range(0, width):
-    for y in range(0, height):
-      r = getRed(getPixel(pic,x,y))
-      g = getGreen(getPixel(pic,x,y))
-      b = getBlue(getPixel(pic,x,y))
-      #Wish python had switch statements
-      #The following statements do the "artifying" by changing the rgb values
-      #based on their initial value.
-      #We'll start with red
-      if r < 64:
-        r = 31
-      elif r > 63 and r < 128:
-        r = 95
-      elif r > 127 and r < 192:
-        r = 159
+  pixels = getPixels(pic)
+  for p in pixels:
+    #The following statements do the "artifying" by changing the rgb values
+    #based on their initial value.
+    rgb = list((p.red, p.green, p.blue))
+    for i in range(0,3):
+      if rgb[i] < 64:
+        rgb[i] = 31
+      elif rgb[i] > 63 and rgb[i] < 128:
+        rgb[i] = 95
+      elif rgb[i] > 127 and rgb[i] < 192:
+        rgb[i] = 159
       else:
-        r = 223
-      #Green is next
-      if g < 64:
-        g = 31
-      elif g > 63 and g < 128:
-        g = 95
-      elif g > 127 and g < 192:
-        g = 159
-      else:
-        g = 223
-      #Finally, blue
-      if b < 64:
-        b = 31
-      elif b > 63 and b < 128:
-        b = 95
-      elif b > 127 and b < 192:
-        b = 159
-      else:
-        b = 223
-      newColor = makeColor(r,g,b)
-      setColor(getPixel(pic,x,y),newColor)
+        rgb[i] = 223
+    setColor(p,makeColor(rgb[0],rgb[1],rgb[2]))
   show(pic)
   write_pic(pic)
   return pic
